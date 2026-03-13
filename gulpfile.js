@@ -1,6 +1,6 @@
 // node.js Packages / Dependencies
 const gulp          = require('gulp');
-const sass          = require('gulp-sass');
+const sass          = require('gulp-sass')(require('sass')); // FIX para Netlify
 const uglify        = require('gulp-uglify');
 const rename        = require('gulp-rename');
 const concat        = require('gulp-concat');
@@ -64,7 +64,7 @@ gulp.task('js', function() {
     .pipe(browserSync.stream());
 });
 
-// Compress (JPEG, PNG, GIF, SVG, JPG)
+// Compress images
 gulp.task('img', function(){
     return gulp.src(paths.src.imgs)
     .pipe(imageMin([
@@ -93,8 +93,7 @@ gulp.task('clean', function () {
 // Prepare all assets for production
 gulp.task('build', gulp.series('sass', 'css', 'js', 'vendors', 'img'));
 
-
-// Watch (SASS, CSS, JS, and HTML) reload browser on change
+// Watch
 gulp.task('watch', function() {
     browserSync.init({
         server: {
